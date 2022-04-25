@@ -1,0 +1,5 @@
+@host = http://localhost:8088
+POST {{host}}/tradingview/mark
+Content-Type: text/plain
+
+Hi Mark
