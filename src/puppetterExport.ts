@@ -75,7 +75,6 @@ export function handlePost(postRow: PostRow): Post | null {
         postRow.text = postRow.text.split(':').join('：');
         let safeNumber = '';
         if (postRow.text.indexOf('安心駕駛') !== -1) {
-            console.log('安心駕駛 :>> ', postRow);
             const safeNumberStartI = postRow.text.indexOf('安心駕駛：');
             const safeNumberEndI = postRow.text.indexOf('#提供座位');
             safeNumber = postRow.text.substring(safeNumberStartI + 5, safeNumberEndI).trim();
@@ -105,7 +104,7 @@ export function handlePost(postRow: PostRow): Post | null {
         const routeTimeStartI = postRow.text.indexOf('行程路線：');
         const routeTimeEndI = postRow.text.indexOf('上車地點：');
         const routeAll = postRow.text.substring(routeTimeStartI + 5, routeTimeEndI).trim();
-        console.log('routeAll :>> ', routeAll, postRow.id);
+        console.log('routeAll :>> ', routeAll, 'id:' + postRow.id);
         const routeSp: string[] = routeAll.split('#');
         const routeStart = routeSp[1].substring(0, 2);
         const routeEnd = routeSp.pop().substring(0, 2);
