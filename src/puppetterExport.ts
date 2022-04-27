@@ -260,7 +260,6 @@ export function handlePostError(postRow: PostRow): string[] {
         const routeTimeStartI = postRow.text.indexOf('行程路線：');
         const routeTimeEndI = postRow.text.indexOf('上車地點：');
         routeAll = postRow.text.substring(routeTimeStartI + 5, routeTimeEndI).trim();
-        console.log('routeAll :>> ', routeAll, postRow.id);
         routeSp = routeAll.split('#');
         routeStart = routeSp[1].substring(0, 2);
         routeEnd = routeSp.pop().substring(0, 2);
