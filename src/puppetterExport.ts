@@ -4,6 +4,7 @@ import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
 import * as serviceAccount from './puppeteer-mark-firebase-adminsdk.json';
 import moment = require("moment");
+import axios from "axios";
 admin.initializeApp({
     credential: admin.credential.cert(<admin.ServiceAccount>serviceAccount),
     storageBucket: 'gs://puppeteer-mark.appspot.com',
@@ -393,5 +394,17 @@ export function sleep(timeout: number) {
         setTimeout(() => {
             resolve(true);
         }, timeout);
+    });
+}
+
+export function notifySend(access_token: string, message: string) {
+    let parameters = '';
+    parameters += 'message=' + encodeURI(message);
+    const url = 'https://notify-api.line.me/api/notify?' + parameters;
+    return axios.post<{ status: number, message: string }>(url, {}, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + access_token,
+        },
     });
 }

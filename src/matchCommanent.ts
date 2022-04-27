@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
 import moment from 'moment';
-import { facebookLogin, Post, postMessage, sleep } from "./puppetterExport";
+import { facebookLogin, notifySend, Post, postMessage, sleep } from "./puppetterExport";
 interface PostMatch {
     postA: Post;
     postB: Post;
@@ -72,9 +72,13 @@ async function workMatchPost() {
         console.log('messageB :>> ', postMatch.postA.id);
         db.collection('posts').doc(postMatch.postA.id).update({ linkIds: admin.firestore.FieldValue.arrayUnion(postMatch.postB.id) });
         db.collection('posts').doc(postMatch.postB.id).update({ linkIds: admin.firestore.FieldValue.arrayUnion(postMatch.postA.id) });
-        await postMessage(page, postAUrl, messageB);
+        await postMessage(page, postAUrl, messageB).catch(() => {
+            notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Error 發生錯誤:' + postAUrl);
+        });
         await sleep(60000 * 2);
-        await postMessage(page, postBUrl, messageA);
+        await postMessage(page, postBUrl, messageA).catch(() => {
+            notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Error 發生錯誤:' + postBUrl);
+        });
     }
     process.exit(1);
 }

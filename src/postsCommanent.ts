@@ -1,7 +1,7 @@
 import moment from 'moment';
 import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
-import { facebookLogin, handlePostError, Post, postMessage, PostRow } from './puppetterExport';
+import { facebookLogin, handlePostError, notifySend, Post, postMessage, PostRow } from './puppetterExport';
 
 
 const db: FirebaseFirestore.Firestore = admin.firestore();
@@ -18,7 +18,9 @@ async function workPostsCommanent() {
         const postUrl = urlBase + '/posts/' + post.id;
         const errorMsg = handlePostError(post);
         console.log('Error post :>> ', moment().format('YYYY-MM-DD HH:mm'), postUrl);
-        await postMessage(page, postUrl, '「Oops！您的共乘需求並沒有被 #社團自動媒合服務 收錄成功。請確認您的' + errorMsg.join('以及') + '若您需要 #社團自動媒合服務，麻煩您重新發文；最後請注意：若您的共乘需求不符合貼文格式，社團管理員將會刪除您的共乘文章');
+        await postMessage(page, postUrl, '「Oops！您的共乘需求並沒有被 #社團自動媒合服務 收錄成功。請確認您的' + errorMsg.join('以及') + '若您需要 #社團自動媒合服務，麻煩您重新發文；最後請注意：若您的共乘需求不符合貼文格式，社團管理員將會刪除您的共乘文章').catch(() => {
+            notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workPostsCommanent Error 發生錯誤:' + postUrl);
+        });
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
         console.log('isCommanent ok');
         process.exit(1)
@@ -41,8 +43,10 @@ async function workPostsCommanent() {
     await facebookLogin(page);
     for (const post of datas.slice(0, 1)) {
         const postUrl = urlBase + '/posts/' + post.id;
-        console.log('Sucdess postUrl :>> ', moment().format('YYYY-MM-DD HH:mm'), postUrl);
-        await postMessage(page, postUrl, '「YES！您的共乘需求已經收錄成功！小幫手將於此篇文章下留言給您適合的行程；請您隨時留意喔！」');
+        console.log('Success postUrl :>> ', moment().format('YYYY-MM-DD HH:mm'), postUrl);
+        await postMessage(page, postUrl, '「YES！您的共乘需求已經收錄成功！小幫手將於此篇文章下留言給您適合的行程；請您隨時留意喔！」').catch(() => {
+            notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workPostsCommanent Success 發生錯誤:' + postUrl);
+        });
         await db.collection('posts').doc(post.id).update({ isCommanent: true });
         console.log('isCommanent ok');
     }

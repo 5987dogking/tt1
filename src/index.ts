@@ -1,14 +1,10 @@
 import express from 'express';
 import admin = require('firebase-admin');
 import line = require('@line/bot-sdk');
-import * as serviceAccount from './booking.json';
 import { LINEBot } from './interface/LINEBot';
 import axiosModule = require('axios');
+import { notifySend } from './puppetterExport';
 export const axios = axiosModule.default;
-admin.initializeApp({
-  credential: admin.credential.cert(<admin.ServiceAccount>serviceAccount),
-  serviceAccountId: 'firebase-adminsdk-vh3yi@booking-8d1fc.iam.gserviceaccount.com',
-});
 const db: FirebaseFirestore.Firestore = admin.firestore();
 const port = parseInt(process.env.PORT as string) || 8088;
 const app = express();
@@ -145,18 +141,6 @@ export function notifyToken(code: string, redirect_uri: string): Promise<{ acces
       console.log('e :>> ', e.response.data);
       resolve(null);
     });
-  });
-}
-
-export function notifySend(access_token: string, message: string) {
-  let parameters = '';
-  parameters += 'message=' + encodeURI(message);
-  const url = 'https://notify-api.line.me/api/notify?' + parameters;
-  return axios.post<{ status: number, message: string }>(url, {}, {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + access_token,
-    },
   });
 }
 
