@@ -21,7 +21,7 @@ async function workPostsCommanent() {
         const postUrl = urlBase + '/posts/' + post.id;
         const errorMsg = (0, puppetterExport_1.handlePostError)(post);
         console.log('postUrl :>> ', postUrl);
-        await (0, puppetterExport_1.postMessage)(page, postUrl, '「Oops！您的共乘需求並沒有被 #社團自動媒合服務 收錄成功。請確認您的' + errorMsg.join('以及'));
+        await (0, puppetterExport_1.postMessage)(page, postUrl, '「Oops！您的共乘需求並沒有被 #社團自動媒合服務 收錄成功。請確認您的' + errorMsg.join('以及') + '若您需要 #社團自動媒合服務，麻煩您重新發文；最後請注意：若您的共乘需求不符合貼文格式，社團管理員將會刪除您的共乘文章');
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
         return;
     }

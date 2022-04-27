@@ -104,7 +104,7 @@ export function handlePost(postRow: PostRow): Post | null {
         const routeTimeStartI = postRow.text.indexOf('行程路線：');
         const routeTimeEndI = postRow.text.indexOf('上車地點：');
         const routeAll = postRow.text.substring(routeTimeStartI + 5, routeTimeEndI).trim();
-        console.log('routeAll :>> ', routeAll, 'id:' + postRow.id);
+        console.log('routeAll :>> ', new Date().toJSON(), routeAll, 'id:' + postRow.id);
         const routeSp: string[] = routeAll.split('#');
         const routeStart = routeSp[1].substring(0, 2);
         const routeEnd = routeSp.pop().substring(0, 2);
@@ -350,23 +350,21 @@ export async function getPost(page: puppeteer.Page): Promise<PostRow> {
     await page.evaluate(() => { window.scrollBy(0, 0); });
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve,) => {
-        let isOk = false;
         const [button0] = await page.$x("//b[contains(text(), '剛剛')]");
         const [button2] = await page.$x("//b[contains(text(), '分鐘')]");
         const [button1] = await page.$x("//b[contains(text(), '小時')]");
         const [button3] = await page.$x("//b[contains(text(), '昨天')]");
         try {
-            if (button0) { console.log('剛剛'); await button0.hover(); await sleep(500); isOk = true; }
-            if (button2) { console.log('分鐘'); await button2.hover(); await sleep(500); isOk = true; console.log('object :>> 分鐘'); }
-            if (button1) { console.log('小時'); await button1.hover(); await sleep(500); isOk = true; console.log('object :>> 小時'); }
-            if (button3) { console.log('昨天'); await button3.hover(); await sleep(500); isOk = true; console.log('object :>> 昨天'); }
+            if (button0) { await button0.hover(); await sleep(500); }
+            if (button2) { await button2.hover(); await sleep(500); }
+            if (button1) { await button1.hover(); await sleep(500); }
+            if (button3) { await button3.hover(); await sleep(500); }
         } catch (error) {
             // console.log('object GG:>> ', error);
         }
         const [buttonOpen] = await page.$x("//*[contains(text(), '公開社團')]");
         await buttonOpen.click();
         await sleep(200);
-        const i = new Date().getTime();
         // await page.screenshot({ path: 'example-click-' + i + '.png' });
         const post: PostRow = await page.evaluate(async () => {
             const ele = document.querySelector('div[role="feed"]>div');
