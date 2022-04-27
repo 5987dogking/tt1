@@ -324,6 +324,7 @@ export function facebookLogin(page: puppeteer.Page, i = 0) {
                 password: process.env.FB_PASSWORD2,
             }
         ];
+        console.log('users :>> ', users);
         await page.goto('https://www.facebook.com/login', { waitUntil: 'networkidle2' });
         // await page.screenshot({ path: 'example-click-log1.png' });
         await page.waitForSelector('#email')
