@@ -17,7 +17,7 @@ async function workPostsCommanent() {
         const post = postErrorCol.docs[0].data() as PostRow;
         const postUrl = urlBase + '/posts/' + post.id;
         const errorMsg = handlePostError(post);
-        console.log('Error post :>> ', moment().add(8, 'hour').format('YYYY-MM-DD HH:mm'), postUrl);
+        console.log('Error post :>> ', moment().format('YYYY-MM-DD HH:mm'), postUrl);
         await postMessage(page, postUrl, '「Oops！您的共乘需求並沒有被 #社團自動媒合服務 收錄成功。請確認您的' + errorMsg.join('以及') + '若您需要 #社團自動媒合服務，麻煩您重新發文；最後請注意：若您的共乘需求不符合貼文格式，社團管理員將會刪除您的共乘文章');
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
         console.log('isCommanent ok');
@@ -41,7 +41,7 @@ async function workPostsCommanent() {
     await facebookLogin(page);
     for (const post of datas.slice(0, 1)) {
         const postUrl = urlBase + '/posts/' + post.id;
-        console.log('Sucdess postUrl :>> ', moment().add(8, 'hour').format('YYYY-MM-DD HH:mm'), postUrl);
+        console.log('Sucdess postUrl :>> ', moment().format('YYYY-MM-DD HH:mm'), postUrl);
         await postMessage(page, postUrl, '「YES！您的共乘需求已經收錄成功！小幫手將於此篇文章下留言給您適合的行程；請您隨時留意喔！」');
         await db.collection('posts').doc(post.id).update({ isCommanent: true });
         console.log('isCommanent ok');

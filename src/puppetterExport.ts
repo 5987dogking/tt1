@@ -105,7 +105,7 @@ export function handlePost(postRow: PostRow): Post | null {
         const routeTimeStartI = postRow.text.indexOf('行程路線：');
         const routeTimeEndI = postRow.text.indexOf('上車地點：');
         const routeAll = postRow.text.substring(routeTimeStartI + 5, routeTimeEndI).trim();
-        console.log('routeAll :>> ', moment().add(8, 'hour').format('YYYY-MM-DD HH:mm'), routeAll, 'id:' + postRow.id);
+        console.log('routeAll :>> ', moment().format('YYYY-MM-DD HH:mm'), routeAll, 'id:' + postRow.id);
         const routeSp: string[] = routeAll.split('#');
         const routeStart = routeSp[1].substring(0, 2);
         const routeEnd = routeSp.pop().substring(0, 2);
