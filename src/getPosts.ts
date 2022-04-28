@@ -57,7 +57,8 @@ async function work() {
             if ((await db.collection('posts').doc(post.id).get()).exists) {
                 // console.log('已經收錄到歷史貼文', postUrl);
                 console.log('已經收錄到歷史貼文');
-                page.close();
+                await page.close();
+                await browser.close();
                 process.exit(1)
                 break;
             }

@@ -23,8 +23,8 @@ async function workPostsCommanent() {
         });
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
         console.log('isCommanent ok');
-        page.close();
-        browser.close();
+        await page.close();
+        await browser.close();
         process.exit(1)
         return;
     }
@@ -41,7 +41,12 @@ async function workPostsCommanent() {
     datas.sort(function (a, b) {
         return Number(a.id) - Number(b.id);
     });
-    if (postCol.size === 0) { return; }
+    if (postCol.size === 0) {
+        await page.close();
+        await browser.close();
+        process.exit(1)
+        return;
+    }
     await facebookLogin(page);
     for (const post of datas.slice(0, 1)) {
         const postUrl = urlBase + '/posts/' + post.id;
@@ -53,8 +58,8 @@ async function workPostsCommanent() {
         console.log('isCommanent ok');
     }
     console.log('done');
-    page.close();
-    browser.close();
+    await page.close();
+    await browser.close();
     process.exit(1)
     return;
 }
