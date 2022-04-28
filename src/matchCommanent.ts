@@ -63,7 +63,7 @@ async function workMatchPost() {
     for (const postMatch of data.slice(0, 1)) {
         if (postMatch.postA.routeStartCode >= 14 || postMatch.postA.routeEndCode >= 14) { continue; }
         if (postMatch.postB.routeStartCode >= 14 || postMatch.postB.routeEndCode >= 14) { continue; }
-        console.log('postMatch :>> ', moment().format('YYYY-MM-DD HH:mm'), postMatch.postA.id, postMatch.postB.id);
+        console.log(moment().format('YYYY-MM-DD HH:mm'), 'postMatch :>> ', postMatch.postA.id, postMatch.postB.id);
         const postAUrl = 'https://www.facebook.com/groups/284674743644775/posts/' + postMatch.postA.id;
         const postBUrl = 'https://www.facebook.com/groups/284674743644775/posts/' + postMatch.postB.id;
         let messageA = '恭喜！#社團自動媒合服務 似乎找到符合您的行程需求！歡迎透過以下連結聯繫您的共乘夥伴唷！';
