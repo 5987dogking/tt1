@@ -80,5 +80,7 @@ async function workMatchPost() {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Error 發生錯誤:' + postBUrl);
         });
     }
+    page.close();
+    browser.close();
     process.exit(1);
 }

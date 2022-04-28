@@ -23,6 +23,8 @@ async function workPostsCommanent() {
         });
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
         console.log('isCommanent ok');
+        page.close();
+        browser.close();
         process.exit(1)
         return;
     }
@@ -51,7 +53,9 @@ async function workPostsCommanent() {
         console.log('isCommanent ok');
     }
     console.log('done');
+    page.close();
+    browser.close();
     process.exit(1)
     return;
 }
-console.log('done ok');
+console.log('done ok', moment().format('YYYY-MM-DD HH:mm'));

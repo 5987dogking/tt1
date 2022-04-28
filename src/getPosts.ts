@@ -57,7 +57,8 @@ async function work() {
             if ((await db.collection('posts').doc(post.id).get()).exists) {
                 // console.log('已經收錄到歷史貼文', postUrl);
                 console.log('已經收錄到歷史貼文');
-                // process.exit(1)
+                page.close();
+                process.exit(1)
                 break;
             }
             // await postMessage(pageForMessage, postUrl, '「YES！您的共乘需求已經收錄成功！小幫手將於此篇文章下留言給您適合的行程；請您隨時留意喔！」');
