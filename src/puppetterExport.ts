@@ -408,8 +408,9 @@ export function notifySend(access_token: string, message: string) {
     });
 }
 
-import shell from 'shelljs';
-export function closeAll(){
-    shell.exec('pkill chrome')
+// import shell from 'shelljs';
+export async function closeAll(browser: puppeteer.Browser) {
+    await browser.close();
+    // shell.exec('pkill chrome')
     process.exit(1);
 }

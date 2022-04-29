@@ -15,6 +15,7 @@ async function workPostsCommanent() {
     const postErrorCol = await db.collection('postsError').where('isCommanent', '==', false).limit(1).get();
     if (postErrorCol.size > 0) {
         await facebookLogin(page);
+        await page.screenshot({ path: 'example-click-login.png' });
         const post = postErrorCol.docs[0].data() as PostRow;
         const postUrl = urlBase + '/posts/' + post.id;
         const errorMsg = handlePostError(post);
@@ -23,7 +24,8 @@ async function workPostsCommanent() {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workPostsCommanent Error 發生錯誤:' + postUrl);
         });
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
-        closeAll();
+        
+        closeAll(browser);
         return;
     }
 
@@ -41,7 +43,7 @@ async function workPostsCommanent() {
     });
     if (postCol.size === 0) {
         console.log(moment().format('YYYY-MM-DD HH:mm'), 'workPostsCommanent No post');
-        closeAll();
+        closeAll(browser);
         return;
     }
     await facebookLogin(page);

@@ -56,7 +56,8 @@ async function workMatchPost() {
     const data = await matchPost();
     if (data.length === 0) {
         console.log(moment().format('YYYY-MM-DD HH:mm'), 'workMatchPost No match posts.');
-        closeAll();
+        process.exit(1);
+        return;
     }
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -83,6 +84,6 @@ async function workMatchPost() {
         await postMessage(page, postBUrl, messageA).catch(() => {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Error 發生錯誤:' + postBUrl);
         });
-        closeAll();
+        closeAll(browser);
     }
 }

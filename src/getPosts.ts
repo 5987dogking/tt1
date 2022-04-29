@@ -22,6 +22,7 @@ async function getPosts() {
     await page.setViewport({ width: 800, height: 1200 });
     // 登入流程
     await facebookLogin(page);
+    await page.screenshot({ path: 'example-click-login.png' });
     const url = process.env.FB_URL; // 測試用
     // const urlBase = 'https://www.facebook.com/groups/284674743644775'; // 測試用
     // const urlBase = 'https://www.facebook.com/groups/317555698448325'; // 正式
@@ -58,7 +59,7 @@ async function getPosts() {
             if ((await db.collection('posts').doc(post.id).get()).exists) {
                 // console.log('已經收錄到歷史貼文', postUrl);
                 console.log(moment().format('YYYY-MM-DD HH:mm'), '已經收錄到歷史貼文');
-                closeAll();
+                closeAll(browser);
                 break;
             }
             // await postMessage(pageForMessage, postUrl, '「YES！您的共乘需求已經收錄成功！小幫手將於此篇文章下留言給您適合的行程；請您隨時留意喔！」');
