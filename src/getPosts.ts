@@ -22,7 +22,7 @@ async function getPosts() {
     await page.setViewport({ width: 800, height: 1200 });
     // 登入流程
     await facebookLogin(page);
-    await page.screenshot({ path: 'example-click-login.png' });
+    // await page.screenshot({ path: 'example-click-login.png' });
     const url = process.env.FB_URL; // 測試用
     // const urlBase = 'https://www.facebook.com/groups/284674743644775'; // 測試用
     // const urlBase = 'https://www.facebook.com/groups/317555698448325'; // 正式

@@ -15,7 +15,7 @@ async function workPostsCommanent() {
     const postErrorCol = await db.collection('postsError').where('isCommanent', '==', false).limit(1).get();
     if (postErrorCol.size > 0) {
         await facebookLogin(page);
-        await page.screenshot({ path: 'example-click-login.png' });
+        // await page.screenshot({ path: 'example-click-login.png' });
         const post = postErrorCol.docs[0].data() as PostRow;
         const postUrl = urlBase + '/posts/' + post.id;
         const errorMsg = handlePostError(post);
