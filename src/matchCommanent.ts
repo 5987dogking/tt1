@@ -65,7 +65,7 @@ async function workMatchPost() {
     await page.setViewport({ width: 800, height: 1200 });
     console.log('pageok :>> ');
     await facebookLogin(page, 1);
-    await page.screenshot({ path: 'example-click-workMatchPost.png' });
+    
     for (const postMatch of data.slice(0, 1)) {
         if (postMatch.postA.routeStartCode >= 14 || postMatch.postA.routeEndCode >= 14) { continue; }
         if (postMatch.postB.routeStartCode >= 14 || postMatch.postB.routeEndCode >= 14) { continue; }
@@ -83,6 +83,7 @@ async function workMatchPost() {
         await postMessage(page, postAUrl, messageB).catch(() => {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Error 發生錯誤:' + postAUrl);
         });
+        await page.screenshot({ path: 'example-click-postAUrl.png' });
         await sleep(60000 * 2);
         await postMessage(page, postBUrl, messageA).catch(() => {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Error 發生錯誤:' + postBUrl);

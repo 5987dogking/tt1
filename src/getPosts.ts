@@ -1,7 +1,7 @@
 /* eslint-disable no-async-promise-executor */
 import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
-import { closeAll, facebookLogin, getPost, handlePost, PostRow, sleep } from './puppetterExport';
+import { closeAll, getPost, handlePost, PostRow, sleep } from './puppetterExport';
 import moment = require('moment');
 const db: FirebaseFirestore.Firestore = admin.firestore();
 getPosts();

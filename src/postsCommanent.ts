@@ -8,12 +8,12 @@ const db: FirebaseFirestore.Firestore = admin.firestore();
 workPostsCommanent();
 console.log(moment().format('YYYY-MM-DD HH:mm'), 'workPostsCommanent working...');
 async function workPostsCommanent() {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    const urlBase = 'https://www.facebook.com/groups/284674743644775';
-    await page.setViewport({ width: 800, height: 1200 });
     const postErrorCol = await db.collection('postsError').where('isCommanent', '==', false).limit(1).get();
     if (postErrorCol.size > 0) {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        const urlBase = 'https://www.facebook.com/groups/284674743644775';
+        await page.setViewport({ width: 800, height: 1200 });
         await facebookLogin(page);
         // await page.screenshot({ path: 'example-click-login.png' });
         const post = postErrorCol.docs[0].data() as PostRow;
@@ -24,11 +24,9 @@ async function workPostsCommanent() {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workPostsCommanent Error 發生錯誤:' + postUrl);
         });
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
-        
         closeAll(browser);
         return;
     }
-
     const activeTime = moment().format('YYYY/MM/DD');
     const postCol = await db.collection('posts').
         where('activeTime', '>=', activeTime).
@@ -43,9 +41,12 @@ async function workPostsCommanent() {
     });
     if (postCol.size === 0) {
         console.log(moment().format('YYYY-MM-DD HH:mm'), 'workPostsCommanent No post');
-        closeAll(browser);
         return;
     }
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const urlBase = 'https://www.facebook.com/groups/284674743644775';
+    await page.setViewport({ width: 800, height: 1200 });
     await facebookLogin(page);
     for (const post of datas.slice(0, 1)) {
         const postUrl = urlBase + '/posts/' + post.id;
@@ -55,8 +56,6 @@ async function workPostsCommanent() {
         });
         await db.collection('posts').doc(post.id).update({ isCommanent: true });
     }
-    await page.close();
-    await browser.close();
-    process.exit(1)
+    closeAll(browser);
     return;
 }
