@@ -29,9 +29,6 @@ async function getPosts() {
     // const url = 'https://www.facebook.com/groups/317555698448325?sorting_setting=CHRONOLOGICAL'; // 正式
     // const url = 'https://www.facebook.com/groups/317555698448325/posts/1751894941681053/'; // error test
     await page.goto(url, { waitUntil: 'networkidle2' });
-    console.log('page ok sleep 5s');
-    await sleep(5000);
-    console.log('page ok sleep 5s ok');
     await page.waitForSelector('div[role="feed"]');
     const data = [];
     // console.time("answer time");

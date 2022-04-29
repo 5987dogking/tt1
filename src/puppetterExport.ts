@@ -355,10 +355,10 @@ export async function getPost(page: puppeteer.Page): Promise<PostRow> {
         const [button1] = await page.$x("//b[contains(text(), '小時')]");
         const [button3] = await page.$x("//b[contains(text(), '昨天')]");
         try {
-            if (button0) { await button0.hover(); await sleep(500); }
-            if (button2) { await button2.hover(); await sleep(500); }
-            if (button1) { await button1.hover(); await sleep(500); }
-            if (button3) { await button3.hover(); await sleep(500); }
+            if (button0) { await button0.hover(); await sleep(5000); }
+            if (button2) { await button2.hover(); await sleep(5000); }
+            if (button1) { await button1.hover(); await sleep(5000); }
+            if (button3) { await button3.hover(); await sleep(5000); }
         } catch (error) {
             // console.log('object GG:>> ', error);
         }
