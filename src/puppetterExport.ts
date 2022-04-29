@@ -359,11 +359,11 @@ export async function getPost(page: puppeteer.Page): Promise<PostRow> {
             if (button2) { await button2.hover(); await sleep(500); }
             if (button1) { await button1.hover(); await sleep(500); }
             if (button3) { await button3.hover(); await sleep(500); }
+            const [buttonOpen] = await page.$x("//*[contains(text(), '公開社團')]");
+            await buttonOpen.click();
         } catch (error) {
             // console.log('object GG:>> ', error);
         }
-        const [buttonOpen] = await page.$x("//*[contains(text(), '公開社團')]");
-        await buttonOpen.click();
         await sleep(200);
         // await page.screenshot({ path: 'example-click-' + i + '.png' });
         const post: PostRow = await page.evaluate(async () => {
