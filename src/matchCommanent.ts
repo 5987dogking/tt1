@@ -54,6 +54,7 @@ workMatchPost();
 console.log(moment().format('YYYY-MM-DD HH:mm'), 'workMatchPost working...');
 async function workMatchPost() {
     const data = await matchPost();
+    // console.log('data :>> ', data);
     if (data.length === 0) {
         console.log(moment().format('YYYY-MM-DD HH:mm'), 'workMatchPost No match posts.');
         process.exit(1);
@@ -62,7 +63,9 @@ async function workMatchPost() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({ width: 800, height: 1200 });
+    console.log('pageok :>> ');
     await facebookLogin(page, 1);
+    await page.screenshot({ path: 'example-click-workMatchPost.png' });
     for (const postMatch of data.slice(0, 1)) {
         if (postMatch.postA.routeStartCode >= 14 || postMatch.postA.routeEndCode >= 14) { continue; }
         if (postMatch.postB.routeStartCode >= 14 || postMatch.postB.routeEndCode >= 14) { continue; }
