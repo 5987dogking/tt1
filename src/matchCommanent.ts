@@ -51,9 +51,11 @@ async function matchPost(): Promise<PostMatch[]> {
 
 const db: FirebaseFirestore.Firestore = admin.firestore();
 workMatchPost();
+console.log(moment().format('YYYY-MM-DD HH:mm'), 'workMatchPost working...');
 async function workMatchPost() {
     const data = await matchPost();
     if (data.length === 0) {
+        console.log(moment().format('YYYY-MM-DD HH:mm'), 'workMatchPost No match posts.');
         closeAll();
     }
     const browser = await puppeteer.launch();

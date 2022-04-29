@@ -6,6 +6,7 @@ import { closeAll, facebookLogin, handlePostError, notifySend, Post, postMessage
 
 const db: FirebaseFirestore.Firestore = admin.firestore();
 workPostsCommanent();
+console.log(moment().format('YYYY-MM-DD HH:mm'), 'workPostsCommanent working...');
 async function workPostsCommanent() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -39,6 +40,7 @@ async function workPostsCommanent() {
         return Number(a.id) - Number(b.id);
     });
     if (postCol.size === 0) {
+        console.log(moment().format('YYYY-MM-DD HH:mm'), 'workPostsCommanent No post');
         closeAll();
         return;
     }

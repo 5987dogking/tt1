@@ -2,10 +2,11 @@
 import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
 import { closeAll, facebookLogin, getPost, handlePost, PostRow, sleep } from './puppetterExport';
+import moment = require('moment');
 const db: FirebaseFirestore.Firestore = admin.firestore();
-console.log('(work) :>> ');
-work();
-async function work() {
+getPosts();
+console.log(moment().format('YYYY-MM-DD HH:mm'), 'getPosts working...');
+async function getPosts() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -56,7 +57,7 @@ async function work() {
             data.push(post);
             if ((await db.collection('posts').doc(post.id).get()).exists) {
                 // console.log('已經收錄到歷史貼文', postUrl);
-                console.log('已經收錄到歷史貼文');
+                console.log(moment().format('YYYY-MM-DD HH:mm'), '已經收錄到歷史貼文');
                 closeAll();
                 break;
             }
