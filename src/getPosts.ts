@@ -21,7 +21,7 @@ async function getPosts() {
     // const pageForMessage = await browser.newPage();
     await page.setViewport({ width: 800, height: 1200 });
     // 登入流程
-    await facebookLogin(page);
+    // await facebookLogin(page);
     // await page.screenshot({ path: 'example-click-login.png' });
     const url = process.env.FB_URL; // 測試用
     // const urlBase = 'https://www.facebook.com/groups/284674743644775'; // 測試用
@@ -29,6 +29,7 @@ async function getPosts() {
     // const url = 'https://www.facebook.com/groups/317555698448325?sorting_setting=CHRONOLOGICAL'; // 正式
     // const url = 'https://www.facebook.com/groups/317555698448325/posts/1751894941681053/'; // error test
     await page.goto(url, { waitUntil: 'networkidle2' });
+    // await page.screenshot({ path: 'example-click-login.png' });
     await page.waitForSelector('div[role="feed"]');
     const data = [];
     // console.time("answer time");
