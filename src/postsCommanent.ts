@@ -1,7 +1,7 @@
 import moment from 'moment';
 import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
-import { facebookLogin, handlePostError, notifySend, Post, postMessage, PostRow } from './puppetterExport';
+import { closeAll, facebookLogin, handlePostError, notifySend, Post, postMessage, PostRow } from './puppetterExport';
 
 
 const db: FirebaseFirestore.Firestore = admin.firestore();
@@ -22,9 +22,7 @@ async function workPostsCommanent() {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workPostsCommanent Error 發生錯誤:' + postUrl);
         });
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });
-        await page.close();
-        await browser.close();
-        process.exit(1)
+        closeAll();
         return;
     }
 
@@ -41,9 +39,7 @@ async function workPostsCommanent() {
         return Number(a.id) - Number(b.id);
     });
     if (postCol.size === 0) {
-        await page.close();
-        await browser.close();
-        process.exit(1)
+        closeAll();
         return;
     }
     await facebookLogin(page);

@@ -30,6 +30,7 @@
     "express": "^4.17.3",
     "firebase-admin": "^10.0.2",
     "moment": "^2.29.3",
-    "puppeteer": "^13.5.2"
+    "puppeteer": "^13.5.2",
+    "shelljs": "^0.8.5"
   }
 }

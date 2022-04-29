@@ -1,7 +1,7 @@
 /* eslint-disable no-async-promise-executor */
 import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
-import { facebookLogin, getPost, handlePost, PostRow, sleep } from './puppetterExport';
+import { closeAll, facebookLogin, getPost, handlePost, PostRow, sleep } from './puppetterExport';
 const db: FirebaseFirestore.Firestore = admin.firestore();
 console.log('(work) :>> ');
 work();
@@ -57,9 +57,7 @@ async function work() {
             if ((await db.collection('posts').doc(post.id).get()).exists) {
                 // console.log('已經收錄到歷史貼文', postUrl);
                 console.log('已經收錄到歷史貼文');
-                await page.close();
-                await browser.close();
-                process.exit(1)
+                closeAll();
                 break;
             }
             // await postMessage(pageForMessage, postUrl, '「YES！您的共乘需求已經收錄成功！小幫手將於此篇文章下留言給您適合的行程；請您隨時留意喔！」');

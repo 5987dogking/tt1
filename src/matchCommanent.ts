@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import admin = require('firebase-admin');
 import moment from 'moment';
-import { facebookLogin, notifySend, Post, postMessage, sleep } from "./puppetterExport";
+import { closeAll, facebookLogin, notifySend, Post, postMessage, sleep } from "./puppetterExport";
 interface PostMatch {
     postA: Post;
     postB: Post;
@@ -54,7 +54,7 @@ workMatchPost();
 async function workMatchPost() {
     const data = await matchPost();
     if (data.length === 0) {
-        process.exit(1);
+        closeAll();
     }
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -81,8 +81,6 @@ async function workMatchPost() {
         await postMessage(page, postBUrl, messageA).catch(() => {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Error 發生錯誤:' + postBUrl);
         });
-        await page.close();
-        await browser.close();
-        process.exit(1);
+        closeAll();
     }
 }
