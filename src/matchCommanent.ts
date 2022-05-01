@@ -25,7 +25,9 @@ async function matchPost(): Promise<PostMatch[]> {
             if (post.type === '徵求座位') { postBs.push(post); }
         }
         for (const postA of postAs) {
+            if (postA.routeStartCode >= 14 || postA.routeEndCode >= 14) { continue; }
             for (const postB of postBs) {
+                if (postB.routeStartCode >= 14 || postB.routeEndCode >= 14) { continue; }
                 // 16 -> 1
                 if (postA.routeStartCode > postA.routeEndCode && postB.routeStartCode > postB.routeEndCode) {
                     if (postB.routeStartCode <= postA.routeStartCode && postB.routeEndCode >= postA.routeEndCode) {
