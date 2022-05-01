@@ -61,11 +61,16 @@ async function workMatchPost() {
         return;
     }
     const browser = await puppeteer.launch();
+    setTimeout(async () => {
+        notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workMatchPost Timeout:');
+        await browser.close();
+        process.exit(1);
+    }, 60000 * 4);
     const page = await browser.newPage();
     await page.setViewport({ width: 800, height: 1200 });
     console.log('pageok :>> ');
     await facebookLogin(page, 1);
-    
+
     for (const postMatch of data.slice(0, 1)) {
         if (postMatch.postA.routeStartCode >= 14 || postMatch.postA.routeEndCode >= 14) { continue; }
         if (postMatch.postB.routeStartCode >= 14 || postMatch.postB.routeEndCode >= 14) { continue; }
