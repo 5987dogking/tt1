@@ -69,6 +69,7 @@ async function workMatchPost() {
     const page = await browser.newPage();
     await page.setViewport({ width: 800, height: 1200 });
     console.log('pageok :>> ');
+    await page.screenshot({ path: 'example-click-facebookLogin.png' });
     await facebookLogin(page, 1);
     await page.screenshot({ path: 'example-click-workMatchPost.png' });
     for (const postMatch of data.slice(0, 1)) {

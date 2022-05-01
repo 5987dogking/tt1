@@ -325,13 +325,13 @@ export function facebookLogin(page: puppeteer.Page, i = 0) {
             }
         ];
         await page.goto('https://www.facebook.com/login', { waitUntil: 'networkidle2' });
-        // await page.screenshot({ path: 'example-click-log1.png' });
+        await page.screenshot({ path: 'example-click-log1.png' });
         await page.waitForSelector('#email')
         await page.focus('#email')
         await page.click('#email')
         await sleep(200);
         await page.keyboard.type(users[i].email)
-        // await page.screenshot({ path: 'example-click-log2.png' });
+        await page.screenshot({ path: 'example-click-log2.png' });
         await sleep(200);
         await page.focus('#pass')
         await page.click('#pass')
@@ -339,7 +339,7 @@ export function facebookLogin(page: puppeteer.Page, i = 0) {
         await page.keyboard.type(users[i].password)
         await sleep(200);
         await page.click('#loginbutton');
-        // await page.screenshot({ path: 'example-click-log3.png' });
+        await page.screenshot({ path: 'example-click-log3.png' });
         await page.waitForNavigation();
         await sleep(1000);
         resolve(true);
