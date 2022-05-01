@@ -71,9 +71,9 @@ async function workMatchPost() {
     const page = await browser.newPage();
     await page.setViewport({ width: 800, height: 1200 });
     console.log('pageok :>> ');
-    await page.screenshot({ path: 'example-click-facebookLogin.png' });
+    await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-workMatchPostLoginBefor.png' });
     await facebookLogin(page, 1);
-    await page.screenshot({ path: 'example-click-workMatchPost.png' });
+    await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-workMatchPostLoginAfter.png' });
     for (const postMatch of data.slice(0, 1)) {
         if (postMatch.postA.routeStartCode >= 14 || postMatch.postA.routeEndCode >= 14) { continue; }
         if (postMatch.postB.routeStartCode >= 14 || postMatch.postB.routeEndCode >= 14) { continue; }
