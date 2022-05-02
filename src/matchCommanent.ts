@@ -73,6 +73,7 @@ async function workMatchPost() {
     console.log('pageok :>> ');
     await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-workMatchPostLoginBefor.png' });
     await facebookLogin(page, 1);
+    await sleep(5000);
     await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-workMatchPostLoginAfter.png' });
     for (const postMatch of data.slice(0, 1)) {
         if (postMatch.postA.routeStartCode >= 14 || postMatch.postA.routeEndCode >= 14) { continue; }
