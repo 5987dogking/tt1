@@ -295,6 +295,7 @@ export function handlePostError(postRow: PostRow): string[] {
 export function postMessage(page: puppeteer.Page, url: string, text: string) {
     return new Promise(async (resolve,) => {
         await page.goto(url, { waitUntil: 'networkidle2' });
+        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageA.png' });
         const [button] = await page.$x("//*[contains(text(), '公開留言')]");
         if (button) {
             await button.click();
@@ -302,8 +303,10 @@ export function postMessage(page: puppeteer.Page, url: string, text: string) {
         }
         await page.keyboard.type(text);
         await sleep(100);
+        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageB.png' });
         await page.keyboard.press('Enter');
         await sleep(2000);
+        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageC.png' });
         resolve(true);
     });
 }
