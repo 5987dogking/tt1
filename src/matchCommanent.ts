@@ -86,7 +86,7 @@ async function workMatchPost() {
         messageA += `細節看這裡 ` + postAUrl;
         let messageB = '恭喜！#社團自動媒合服務 似乎找到符合您的行程需求！歡迎透過以下連結聯繫您的共乘夥伴唷！';
         messageB += `於 #${postMatch.postB.activeTime} 從 #${postMatch.postB.routeStart} => #${postMatch.postB.routeEnd}；`;
-        messageB += `細節看這裡 `;
+        messageB += `細節看這裡 ` + postBUrl;
         db.collection('posts').doc(postMatch.postA.id).update({ linkIds: admin.firestore.FieldValue.arrayUnion(postMatch.postB.id) });
         db.collection('posts').doc(postMatch.postB.id).update({ linkIds: admin.firestore.FieldValue.arrayUnion(postMatch.postA.id) });
         await postMessage(page, postAUrl, messageB).catch(() => {
