@@ -313,33 +313,21 @@ export function postMessage(page: puppeteer.Page, url: string, text: string) {
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
-export function facebookLogin(page: puppeteer.Page, i = 0) {
+export function facebookLogin(page: puppeteer.Page, i = '1') {
     return new Promise(async (resolve,) => {
-        const users = [
-            // 留言用
-            {
-                email: process.env.FB_EMAIL1,
-                password: process.env.FB_PASSWORD1,
-            },
-            // 媒合用
-            {
-                email: process.env.FB_EMAIL2,
-                password: process.env.FB_PASSWORD2,
-            }
-        ];
         await page.goto('https://www.facebook.com/login', { waitUntil: 'networkidle2' });
         await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login1.png' });
         await page.waitForSelector('#email')
         await page.focus('#email')
         await page.click('#email')
         await sleep(200);
-        await page.keyboard.type(users[i].email)
+        await page.keyboard.type(process.env['FB_EMAIL' + i])
         await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login2.png' });
         await sleep(200);
         await page.focus('#pass')
         await page.click('#pass')
         await sleep(200);
-        await page.keyboard.type(users[i].password)
+        await page.keyboard.type(process.env['FB_PASSWORD' + i])
         await sleep(200);
         await page.click('#loginbutton');
         await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login3.png' });

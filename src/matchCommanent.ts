@@ -53,7 +53,11 @@ async function matchPost(): Promise<PostMatch[]> {
 
 const db: FirebaseFirestore.Firestore = admin.firestore();
 workMatchPost();
-console.log(moment().format('YYYY-MM-DD HH:mm'), 'workMatchPost working...');
+
+let i = process.argv[2];
+if (!i) { i = '1'; }
+console.log(moment().format('YYYY-MM-DD HH:mm'), 'workMatchPost working...', process.env['FB_EMAIL' + i]);
+
 async function workMatchPost() {
     const data = await matchPost();
     // console.log('data :>> ', data);
@@ -72,7 +76,7 @@ async function workMatchPost() {
     await page.setViewport({ width: 800, height: 1200 });
     console.log('pageok :>> ');
     await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-workMatchPostLoginBefor.png' });
-    await facebookLogin(page, 1);
+    await facebookLogin(page, i);
     await sleep(5000);
     await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-workMatchPostLoginAfter.png' });
     for (const postMatch of data.slice(0, 1)) {
