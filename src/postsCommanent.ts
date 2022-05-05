@@ -20,7 +20,7 @@ async function workPostsCommanent() {
         const postUrl = urlBase + '/posts/' + post.id;
         const errorMsg = handlePostError(post);
         console.log(moment().format('YYYY-MM-DD HH:mm'), 'Error postUrl :>> ', postUrl);
-        await postMessage(page, postUrl, '「Oops！您的共乘需求並沒有被 #社團自動媒合服務 收錄成功。請確認您的' + errorMsg.join('以及') + '若您需要 #社團自動媒合服務，麻煩您重新發文；最後請注意：若您的共乘需求不符合貼文格式，社團管理員將會刪除您的共乘文章').catch(() => {
+        await postMessage(page, postUrl, '「Oops！您的共乘需求並沒有被 #共乘自動媒合服務 收錄成功。請確認您的' + errorMsg.join('以及') + '若您需要 #共乘自動媒合服務，麻煩您重新發文；最後請注意：若您的共乘需求不符合貼文格式，社團管理員將會刪除您的共乘文章').catch(() => {
             notifySend('AAl1kG01KxATFfow2CeqJWAGSPcSM359ByEv4hDsxbc', 'workPostsCommanent Error 發生錯誤:' + postUrl);
         });
         await db.collection('postsError').doc(post.id).update({ isCommanent: true });

@@ -85,10 +85,10 @@ async function workMatchPost() {
         console.log(moment().format('YYYY-MM-DD HH:mm'), 'postMatch :>> ', postMatch.postA.id, postMatch.postB.id);
         const postAUrl = 'https://www.facebook.com/groups/284674743644775/posts/' + postMatch.postA.id;
         const postBUrl = 'https://www.facebook.com/groups/284674743644775/posts/' + postMatch.postB.id;
-        let messageA = '恭喜！#社團自動媒合服務 似乎找到符合您的行程需求！歡迎透過以下連結聯繫您的共乘夥伴唷！';
+        let messageA = '恭喜！#共乘自動媒合服務 似乎找到符合您的行程需求！歡迎透過以下連結聯繫您的共乘夥伴唷！';
         messageA += `於 #${postMatch.postA.activeTime} 從 #${postMatch.postA.routeStart} => #${postMatch.postA.routeEnd}；`;
         messageA += `細節看這裡 ` + postAUrl;
-        let messageB = '恭喜！#社團自動媒合服務 似乎找到符合您的行程需求！歡迎透過以下連結聯繫您的共乘夥伴唷！';
+        let messageB = '恭喜！#共乘自動媒合服務 似乎找到符合您的行程需求！歡迎透過以下連結聯繫您的共乘夥伴唷！';
         messageB += `於 #${postMatch.postB.activeTime} 從 #${postMatch.postB.routeStart} => #${postMatch.postB.routeEnd}；`;
         messageB += `細節看這裡 ` + postBUrl;
         db.collection('posts').doc(postMatch.postA.id).update({ linkIds: admin.firestore.FieldValue.arrayUnion(postMatch.postB.id) });
