@@ -295,7 +295,9 @@ export function handlePostError(postRow: PostRow): string[] {
 export function postMessage(page: puppeteer.Page, url: string, text: string) {
     return new Promise(async (resolve,) => {
         await page.goto(url, { waitUntil: 'networkidle2' });
-        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageA.png' });
+        if (process.env.is_screenshot === 'true') {
+            await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageA.png' });
+        }
         const [button] = await page.$x("//*[contains(text(), '公開留言')]");
         if (button) {
             await button.click();
@@ -303,10 +305,14 @@ export function postMessage(page: puppeteer.Page, url: string, text: string) {
         }
         await page.keyboard.type(text);
         await sleep(100);
-        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageB.png' });
+        if (process.env.is_screenshot === 'true') {
+            await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageB.png' });
+        }
         await page.keyboard.press('Enter');
         await sleep(2000);
-        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageC.png' });
+        if (process.env.is_screenshot === 'true') {
+            await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-postMessageC.png' });
+        }
         resolve(true);
     });
 }
@@ -316,13 +322,17 @@ require('dotenv').config()
 export function facebookLogin(page: puppeteer.Page, i = '1') {
     return new Promise(async (resolve,) => {
         await page.goto('https://www.facebook.com/login', { waitUntil: 'networkidle2' });
-        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login1.png' });
+        if (process.env.is_screenshot === 'true') {
+            await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login1.png' });
+        }
         await page.waitForSelector('#email')
         await page.focus('#email')
         await page.click('#email')
         await sleep(200);
         await page.keyboard.type(process.env['FB_EMAIL' + i])
-        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login2.png' });
+        if (process.env.is_screenshot === 'true') {
+            await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login2.png' });
+        }
         await sleep(200);
         await page.focus('#pass')
         await page.click('#pass')
@@ -330,7 +340,9 @@ export function facebookLogin(page: puppeteer.Page, i = '1') {
         await page.keyboard.type(process.env['FB_PASSWORD' + i])
         await sleep(200);
         await page.click('#loginbutton');
-        await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login3.png' });
+        if (process.env.is_screenshot === 'true') {
+            await page.screenshot({ path: moment().format('YYYY-MM-DD-HHmm') + '-login3.png' });
+        }
         await page.waitForNavigation();
         await sleep(1000);
         resolve(true);
